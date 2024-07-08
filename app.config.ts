@@ -80,6 +80,7 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
         ],
       },
     ],
+    ['expo-local-authentication'],
   ],
   extra: {
     ...ClientEnv,
