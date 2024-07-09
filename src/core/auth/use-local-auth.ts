@@ -5,7 +5,7 @@ import { Alert } from 'react-native';
 export const useLocalAuth = () => {
   const [isAuth, setIsAuth] = useState(false);
 
-  const onAuth = async () => {
+  const onAuth = async (callback: () => void) => {
     const hasHardware = await LocalAuthentication.hasHardwareAsync();
     if (!hasHardware) {
       Alert.alert('Error', 'Your device does not support Face ID or Touch ID.');
@@ -26,9 +26,12 @@ export const useLocalAuth = () => {
     if (result.success) {
       setIsAuth(true);
       Alert.alert('Success', 'Authentication successful!');
+      callback();
     } else {
       Alert.alert('Error', 'Authentication failed.');
     }
+
+    return result.success;
   };
 
   return { isAuth, onAuth };

@@ -1,4 +1,5 @@
 import { zodResolver } from '@hookform/resolvers/zod';
+import type { FC, PropsWithChildren } from 'react';
 import type { SubmitHandler } from 'react-hook-form';
 import { useForm } from 'react-hook-form';
 import * as z from 'zod';
@@ -25,7 +26,10 @@ export type LoginFormProps = {
   onSubmit?: SubmitHandler<FormType>;
 };
 
-export const LoginForm = ({ onSubmit = () => {} }: LoginFormProps) => {
+export const LoginForm: FC<PropsWithChildren<LoginFormProps>> = ({
+  children,
+  onSubmit = () => {},
+}) => {
   const { handleSubmit, control } = useForm<FormType>({
     resolver: zodResolver(schema),
   });
@@ -61,6 +65,7 @@ export const LoginForm = ({ onSubmit = () => {} }: LoginFormProps) => {
         label="Login"
         onPress={handleSubmit(onSubmit)}
       />
+      {children}
     </View>
   );
 };
